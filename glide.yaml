@@ -1,0 +1,13 @@
+package: github.com/avarabyeu/releaser
+import:
+- package: github.com/coreos/go-semver
+  version: ^0.2.0
+  subpackages:
+  - semver
+- package: github.com/juju/errgo
+  subpackages:
+  - errors
+- package: github.com/spf13/cobra
+- package: github.com/spf13/viper
+- package: gopkg.in/cheggaaa/pb.v1
+  version: ^2.0.4

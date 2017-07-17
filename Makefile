@@ -17,15 +17,16 @@ help:
 	@echo "checkstyle - gofmt+golint+misspell"
 
 vendor: ## Install govendor and sync vendored dependencies
-	go get -u github.com/kardianos/govendor
-	govendor sync
+	$(GO) get -v github.com/Masterminds/glide
+	cd $(GOPATH)/src/github.com/Masterminds/glide && git checkout tags/v0.12.3 && go install && cd -
+	glide install
 
 get-build-deps: vendor
 	$(GO) get $(BUILD_DEPS)
 	gometalinter --install
 
 test: vendor
-	govendor test +local
+	$(GO) test $(glide novendor)
 
 checkstyle: get-build-deps
 	gometalinter --vendor ./... --fast --disable=gas --disable=errcheck --disable=gotype --deadline 10m
