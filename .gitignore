@@ -12,3 +12,20 @@
 
 # Project-local glide cache, RE: https://github.com/Masterminds/glide/issues/736
 .glide/
+
+## IDEA stuff
+.idea/
+*.iml
+
+## Binaries
+/bin/
+
+##Vendor
+vendor/*/
+
+## Data
+data/
+
+release/
+
+coverage.txt

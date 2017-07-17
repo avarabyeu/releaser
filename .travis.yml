@@ -1,0 +1,11 @@
+sudo: false
+language: go
+go:
+  - 1.8.3
+
+script:
+  - make build
+
+after_success:
+ - curl --request POST "https://goreportcard.com/checks" --data "repo=github.com/avarabyeu/releaser"
+ - bash <(curl -s https://codecov.io/bash)
