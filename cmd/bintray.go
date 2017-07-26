@@ -154,7 +154,7 @@ func uploadFile(version string, filePath string, bt *BintrayConf, wg *sync.WaitG
 		}
 	}()
 
-	rq, err := http.NewRequest("PUT", fmt.Sprintf("https://api.bintray.com/content/%s/%s/%s", bt.User, bt.Repo, fi.Name()), r)
+	rq, err := http.NewRequest("PUT", fmt.Sprintf("https://api.bintray.com/content/%s/%s/%s/%s", bt.User, bt.Repo, version, fi.Name()), r)
 	rq.Header.Set("Content-Type", mpw.FormDataContentType())
 	rq.Header.Set("X-BintrayConf-Package", bt.Pack)
 	rq.Header.Set("X-BintrayConf-Version", version)
