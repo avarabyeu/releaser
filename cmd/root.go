@@ -6,7 +6,6 @@ import (
 	"github.com/spf13/viper"
 	"fmt"
 	"os"
-	"log"
 )
 
 func init() {

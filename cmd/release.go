@@ -64,4 +64,6 @@ func pushVersionFile(file string, message string) error {
 	if nil != err {
 		return err
 	}
+
+	return nil
 }
