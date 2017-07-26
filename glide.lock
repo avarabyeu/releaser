@@ -1,5 +1,5 @@
-hash: 3f1e0ad5bc1a589bcec52026da44ff2c588eac3e427d885166f1c50d1e3bf60e
-updated: 2017-07-17T12:26:18.072286956+03:00
+hash: cffe11fcc67237c82639cfaf0bb5dc8d2c72be1b595529af79652fa0be111a58
+updated: 2017-07-26T19:32:27.803656413+03:00
 imports:
 - name: github.com/coreos/go-semver
   version: 8ab6407b697782a06568d4b7f1db25550ec2e4c6
@@ -26,12 +26,8 @@ imports:
   - errors
 - name: github.com/magiconair/properties
   version: be5ece7dd465ab0765a9682137865547526d1dfb
-- name: github.com/mattn/go-colorable
-  version: 5411d3eea5978e6cdc258b30de592b60df6aba96
-  repo: https://github.com/mattn/go-colorable
-- name: github.com/mattn/go-isatty
-  version: 57fdcb988a5c543893cc61bce354a6e24ab70022
-  repo: https://github.com/mattn/go-isatty
+- name: github.com/mattn/go-runewidth
+  version: 97311d9f7767e3d6f422ea06661bc2c7a19e8a5d
 - name: github.com/mitchellh/mapstructure
   version: d0303fe809921458f417bcf828397a65db30a7e4
 - name: github.com/pelletier/go-toml
@@ -60,21 +56,7 @@ imports:
   - transform
   - unicode/norm
 - name: gopkg.in/cheggaaa/pb.v1
-  version: 4a1bf7a97d1348c5b50aabf6e1eb0496ca0a3d33
-- name: gopkg.in/cheggaaa/pb.v2
-  version: 4a1bf7a97d1348c5b50aabf6e1eb0496ca0a3d33
-  subpackages:
-  - termutil
-- name: gopkg.in/fatih/color.v1
-  version: 570b54cabe6b8eb0bc2dfce68d964677d63b5260
-- name: gopkg.in/mattn/go-colorable.v0
-  version: 941b50ebc6efddf4c41c8e4537a5f68a4e686b24
-- name: gopkg.in/mattn/go-isatty.v0
-  version: fc9e8d8ef48496124e79ae0df75490096eccf6fe
-- name: gopkg.in/mattn/go-runewidth.v0
-  version: 9e777a8366cce605130a531d2cd6363d07ad7317
-- name: gopkg.in/VividCortex/ewma.v1
-  version: c595cd886c223c6c28fc9ae2727a61b5e4693d85
+  version: f6ccf2184de4dd34495277e38dc19b6e7fbe0ea2
 - name: gopkg.in/yaml.v2
   version: 3b4ad1db5b2a649883ff3782f5f9f6fb52be71af
 testImports: []

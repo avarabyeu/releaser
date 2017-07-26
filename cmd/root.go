@@ -73,9 +73,12 @@ func initConfig() {
 
 }
 
+//Config represents project config
 type Config struct {
 	Bintray *BintrayConf `mapstructure:"bintray"`
 }
+
+//BintrayConf represents project config
 type BintrayConf struct {
 	User  string
 	Token string
