@@ -18,10 +18,16 @@ var releaseCommand = &cobra.Command{
 		bump(cmd)
 
 		//commit changes
-		pushVersionFile(verFile, "[Releaser] Update release version")
+		err := pushVersionFile(verFile, "[Releaser] Update release version")
+		if nil != err {
+			log.Fatal("Cannot push new version")
+		}
 
 		//upload to bintray
-		uploadToBintray(cmd)
+		err = uploadToBintray(cmd)
+		if nil != err {
+			log.Fatal("Cannot upload artifacts to bintray")
+		}
 
 		//create tag
 		semver := GetSemver(cmd)
@@ -30,15 +36,32 @@ var releaseCommand = &cobra.Command{
 		//bump new snapshot
 		semver.NextSnapshot("")
 		semver.Save()
+		if nil != err {
+			log.Fatal("Cannot upload artifacts to bintray")
+		}
 
 		//push changes
-		pushVersionFile(verFile, "[Releaser] Bump new snapshot version")
+		err = pushVersionFile(verFile, "[Releaser] Bump new snapshot version")
+		if nil != err {
+			log.Fatal("Cannot push new version")
+		}
+
 	},
 }
 
-func pushVersionFile(file string, message string) {
+func pushVersionFile(file string, message string) error {
 	//commit changes
-	git.Add(file)
+	err := git.Add(file)
+	if nil != err {
+		return err
+	}
 	git.Commit(message)
+	if nil != err {
+		return err
+	}
+
 	git.Push("origin")
+	if nil != err {
+		return err
+	}
 }

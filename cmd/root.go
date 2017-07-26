@@ -70,9 +70,6 @@ func initConfig() {
 		os.Exit(1)
 	}
 
-	log.Println(conf.GetString("bintray.user"))
-
-	log.Println(config)
 
 }
 
