@@ -67,6 +67,9 @@ func initConfig() {
 		os.Exit(1)
 	}
 
+	conf.SetDefault("Replace", map[string]string{})
+
+
 	if err := conf.Unmarshal(&config); err != nil {
 		fmt.Println("Can't unmarshall:", err)
 		os.Exit(1)

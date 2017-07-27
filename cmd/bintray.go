@@ -12,7 +12,6 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
-	"mime/multipart"
 	"net/http"
 	"os"
 	"path"
@@ -136,9 +135,9 @@ func uploadFile(version string, filePath string, bt *BintrayConf, wg *sync.WaitG
 	pool.Add(bar)
 
 	r, w := io.Pipe()
-	mpw := multipart.NewWriter(w)
+
 	go func() {
-		var part io.Writer
+		var part io.Writer = new(bytes.Buffer)
 		defer w.Close()
 		defer f.Close()
 
@@ -146,9 +145,7 @@ func uploadFile(version string, filePath string, bt *BintrayConf, wg *sync.WaitG
 		if _, err = io.Copy(part, f); err != nil {
 			log.Fatal(err)
 		}
-		if err = mpw.Close(); err != nil {
-			log.Fatal(err)
-		}
+
 	}()
 
 	rq, err := http.NewRequest("PUT", fmt.Sprintf("https://api.bintray.com/content/%s/%s/%s/%s", bt.Org, bt.Repo, version, fi.Name()), r)
