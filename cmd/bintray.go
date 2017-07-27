@@ -15,7 +15,6 @@ import (
 	"net/http"
 	"os"
 	"path"
-	"sync"
 	"time"
 )
 
@@ -67,20 +66,20 @@ func uploadToBintray(cmd *cobra.Command) error {
 	}
 
 	// update bars
-	pool, err := pb.StartPool()
+	//pool, err := pb.StartPool()
 	if err != nil {
 		return err
 	}
 
-	wg := new(sync.WaitGroup)
+	//wg := new(sync.WaitGroup)
 	for _, f := range files {
-		wg.Add(1)
+		//wg.Add(1)
 		log.Print(f.Name())
-		go uploadFile(GetSemver(cmd).Current(), path.Join(artifactsFolder, f.Name()), config.Bintray, wg, pool)
+		uploadFile(GetSemver(cmd).Current(), path.Join(artifactsFolder, f.Name()), config.Bintray)
 	}
 
-	wg.Wait()
-	pool.Stop()
+	//wg.Wait()
+	//pool.Stop()
 	return nil
 }
 
@@ -117,8 +116,8 @@ func createVersion(version string, bd *BintrayConf) error {
 	return nil
 }
 
-func uploadFile(version string, filePath string, bt *BintrayConf, wg *sync.WaitGroup, pool *pb.Pool) {
-	defer wg.Done()
+func uploadFile(version string, filePath string, bt *BintrayConf) {
+	//defer wg.Done()
 	var err error
 	var f *os.File
 	var fi os.FileInfo
@@ -132,7 +131,7 @@ func uploadFile(version string, filePath string, bt *BintrayConf, wg *sync.WaitG
 		log.Fatal(err)
 	}
 	bar = pb.New64(fi.Size()).Prefix(util.SubstrAfterLast(f.Name(), "/")).SetUnits(pb.U_BYTES).SetRefreshRate(refreshRate)
-	pool.Add(bar)
+	//pool.Add(bar)
 
 	r, w := io.Pipe()
 	go func() {
