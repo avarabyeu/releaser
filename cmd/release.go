@@ -38,7 +38,7 @@ var releaseCommand = &cobra.Command{
 		//upload to bintray
 		err = uploadToBintray(cmd)
 		if nil != err {
-			log.Fatal("Cannot upload artifacts to bintray")
+			log.Fatalf("Cannot upload artifacts to bintray. %s", err.Error())
 		}
 
 		//create tag
@@ -49,7 +49,7 @@ var releaseCommand = &cobra.Command{
 		semver.NextSnapshot("")
 		semver.Save()
 		if nil != err {
-			log.Fatal("Cannot upload artifacts to bintray")
+			log.Fatalf("Cannot upload artifacts to bintray. %s", err.Error())
 		}
 
 		//push changes
