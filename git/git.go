@@ -34,7 +34,7 @@ func CreateTag(tag, message string) error {
 
 //Push pushes changes to origin
 func Push(origin string) error {
-	_, err := ExecCmd("git", origin)
+	_, err := ExecCmd("git", "push", origin)
 	return err
 }
 

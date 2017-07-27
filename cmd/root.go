@@ -17,6 +17,8 @@ func init() {
 	RootCommand.PersistentFlags().StringP("bintray.repo", "", "", "BintrayConf repository")
 	RootCommand.PersistentFlags().StringP("bintray.pack", "", "", "BintrayConf package")
 	RootCommand.PersistentFlags().StringP("artifactsFolder", "", "release", "Folder with artifacts to upload")
+	RootCommand.PersistentFlags().StringP("replace", "", "release", "Replaces placeholders in files")
+
 
 	cobra.OnInitialize(initConfig)
 
@@ -27,6 +29,7 @@ func init() {
 	RootCommand.AddCommand(bintrayCommand)
 	RootCommand.AddCommand(exec)
 	RootCommand.AddCommand(releaseCommand)
+	RootCommand.AddCommand(replaceCommand)
 }
 
 var config *Config
@@ -53,6 +56,8 @@ func initConfig() {
 	conf.BindPFlag("bintray.repo", RootCommand.PersistentFlags().Lookup("bintray.repo"))
 	conf.BindPFlag("bintray.pack", RootCommand.PersistentFlags().Lookup("bintray.pack"))
 	conf.BindPFlag("artifactsFolder", RootCommand.PersistentFlags().Lookup("artifactsFolder"))
+	conf.BindPFlag("replace", RootCommand.PersistentFlags().Lookup("replace"))
+
 
 	// Search config in home directory with name ".cobra" (without extension).
 	conf.SetConfigName(".releaser")
@@ -75,6 +80,8 @@ func initConfig() {
 //Config represents project config
 type Config struct {
 	Bintray *BintrayConf `mapstructure:"bintray"`
+	ArtifactsFolder string
+	Replace []string
 }
 
 //BintrayConf represents project config

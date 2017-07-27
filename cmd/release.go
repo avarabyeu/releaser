@@ -4,6 +4,7 @@ import (
 	"github.com/avarabyeu/releaser/git"
 	"github.com/spf13/cobra"
 	"log"
+	"strings"
 )
 
 var releaseCommand = &cobra.Command{
@@ -17,8 +18,14 @@ var releaseCommand = &cobra.Command{
 		//remove snapshot
 		bump(cmd)
 
+		//replace if needed
+		replace(cmd, config.Replace)
+		toCommit := []string{}
+		_ = append(toCommit, config.Replace...)
+		_ = append(toCommit, verFile)
+
 		//commit changes
-		err := pushVersionFile(verFile, "[Releaser] Update release version")
+		err := pushFiles("[Releaser] Update release version", config.Replace...)
 		if nil != err {
 			log.Fatal("Cannot push new version")
 		}
@@ -41,7 +48,7 @@ var releaseCommand = &cobra.Command{
 		}
 
 		//push changes
-		err = pushVersionFile(verFile, "[Releaser] Bump new snapshot version")
+		err = pushFiles("[Releaser] Bump new snapshot version", verFile)
 		if nil != err {
 			log.Fatal("Cannot push new version")
 		}
@@ -49,9 +56,9 @@ var releaseCommand = &cobra.Command{
 	},
 }
 
-func pushVersionFile(file string, message string) error {
+func pushFiles(message string, files ...string) error {
 	//commit changes
-	err := git.Add(file)
+	err := git.Add(strings.Join(files, " "))
 	if nil != err {
 		return err
 	}

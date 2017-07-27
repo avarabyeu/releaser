@@ -32,14 +32,14 @@ checkstyle: get-build-deps
 	gometalinter --vendor ./... --fast --disable=gas --disable=errcheck --disable=gotype --deadline 10m
 
 fmt:
-	govendor fmt +local
+	gofmt -l -w -s ${GOFILES_NOVENDOR}
 
 # Builds the project
 build: checkstyle test
-	govendor build +local
+	$(GO) build ${BUILD_INFO_LDFLAGS} -o ${BINARY_DIR}/service-index ./
 
 install: checkstyle test
-	govendor install +local
+	$(GO) install
 
 clean:
 	if [ -d ${BINARY_DIR} ] ; then rm -r ${BINARY_DIR} ; fi
