@@ -24,7 +24,7 @@ var replaceCommand = &cobra.Command{
 }
 
 //Replaces placeholders in files
-func replace(cmd *cobra.Command, files []string) error {
+func replace(cmd *cobra.Command, files map[string]string) error {
 	wd, err := os.Getwd()
 	if nil != err {
 		log.Printf("Cannot get work dir! %s", err.Error())
@@ -34,22 +34,22 @@ func replace(cmd *cobra.Command, files []string) error {
 	data := util.GetEnvVars()
 	data["version"] = GetSemver(cmd).Current()
 
-	for _, repl := range files {
-		replFile := path.Join(wd, repl)
-		content, err := ioutil.ReadFile(replFile)
+	for tmplPath, resPath := range files {
+		replFile := path.Join(wd, tmplPath)
+		tmplContent, err := ioutil.ReadFile(replFile)
 		if nil != err {
 			log.Printf("Cannot read file to replace: %s", err.Error())
 			return err
 		}
-		tmpl, _ := template.New(repl).Parse(string(content))
-		tmplRes := new(bytes.Buffer)
+		tmpl, _ := template.New(tmplPath).Parse(string(tmplContent))
+		processed := new(bytes.Buffer)
 
-		err = tmpl.Execute(tmplRes, data)
+		err = tmpl.Execute(processed, data)
 		if nil != err {
 			return err
 		}
 
-		err = ioutil.WriteFile(replFile, tmplRes.Bytes(), 0644)
+		err = ioutil.WriteFile(resPath, processed.Bytes(), 0644)
 		if nil != err {
 			return err
 		}

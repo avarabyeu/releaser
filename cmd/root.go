@@ -19,7 +19,6 @@ func init() {
 	RootCommand.PersistentFlags().StringP("artifactsFolder", "", "release", "Folder with artifacts to upload")
 	RootCommand.PersistentFlags().StringP("replace", "", "release", "Replaces placeholders in files")
 
-
 	cobra.OnInitialize(initConfig)
 
 	RootCommand.AddCommand(showCommand)
@@ -58,7 +57,6 @@ func initConfig() {
 	conf.BindPFlag("artifactsFolder", RootCommand.PersistentFlags().Lookup("artifactsFolder"))
 	conf.BindPFlag("replace", RootCommand.PersistentFlags().Lookup("replace"))
 
-
 	// Search config in home directory with name ".cobra" (without extension).
 	conf.SetConfigName(".releaser")
 	conf.AddConfigPath(".")
@@ -74,14 +72,13 @@ func initConfig() {
 		os.Exit(1)
 	}
 
-
 }
 
 //Config represents project config
 type Config struct {
-	Bintray *BintrayConf `mapstructure:"bintray"`
+	Bintray         *BintrayConf `mapstructure:"bintray"`
 	ArtifactsFolder string
-	Replace []string
+	Replace         map[string]string
 }
 
 //BintrayConf represents project config
