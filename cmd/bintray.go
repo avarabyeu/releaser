@@ -142,9 +142,6 @@ func uploadFile(version string, filePath string, bt *BintrayConf, wg *sync.WaitG
 		defer w.Close()
 		defer f.Close()
 
-		if part, err = mpw.CreateFormFile("file", fi.Name()); err != nil {
-			log.Fatal(err)
-		}
 		part = io.MultiWriter(part, bar)
 		if _, err = io.Copy(part, f); err != nil {
 			log.Fatal(err)
@@ -155,7 +152,7 @@ func uploadFile(version string, filePath string, bt *BintrayConf, wg *sync.WaitG
 	}()
 
 	rq, err := http.NewRequest("PUT", fmt.Sprintf("https://api.bintray.com/content/%s/%s/%s/%s", bt.Org, bt.Repo, version, fi.Name()), r)
-	rq.Header.Set("Content-Type", mpw.FormDataContentType())
+	rq.Header.Set("Content-Type", "application/octet-stream")
 	rq.Header.Set("X-Bintray-Package", bt.Pack)
 	rq.Header.Set("X-Bintray-Version", version)
 	rq.Header.Set("X-Bintray-Override", "1")
