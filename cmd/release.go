@@ -2,10 +2,10 @@ package cmd
 
 import (
 	"github.com/avarabyeu/releaser/git"
+	"github.com/avarabyeu/releaser/util"
 	"github.com/spf13/cobra"
 	"log"
 	"strings"
-	"github.com/avarabyeu/releaser/util"
 )
 
 var releaseCommand = &cobra.Command{
