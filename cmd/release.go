@@ -5,6 +5,7 @@ import (
 	"github.com/spf13/cobra"
 	"log"
 	"strings"
+	"github.com/avarabyeu/releaser/util"
 )
 
 var releaseCommand = &cobra.Command{
@@ -21,11 +22,11 @@ var releaseCommand = &cobra.Command{
 		//replace if needed
 		replace(cmd, config.Replace)
 		toCommit := []string{}
-		_ = append(toCommit, config.Replace...)
+		_ = append(toCommit, util.MapValues(config.Replace)...)
 		_ = append(toCommit, verFile)
 
 		//commit changes
-		err := pushFiles("[Releaser] Update release version", config.Replace...)
+		err := pushFiles("[Releaser] Update release version", toCommit...)
 		if nil != err {
 			log.Fatal("Cannot push new version")
 		}
