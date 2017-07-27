@@ -135,14 +135,12 @@ func uploadFile(version string, filePath string, bt *BintrayConf, wg *sync.WaitG
 	pool.Add(bar)
 
 	r, w := io.Pipe()
-
 	go func() {
-		var part io.Writer = new(bytes.Buffer)
 		defer w.Close()
 		defer f.Close()
 
-		part = io.MultiWriter(part, bar)
-		if _, err = io.Copy(part, f); err != nil {
+		rqw := io.MultiWriter(w, bar)
+		if _, err = io.Copy(rqw, f); err != nil {
 			log.Fatal(err)
 		}
 
