@@ -16,9 +16,6 @@ var releaseCommand = &cobra.Command{
 		log.Println("v1")
 		verFile := GetSemverFile(cmd)
 
-		//remove snapshot
-		bump(cmd)
-
 		//replace if needed
 		err := replace(cmd, config.Replace)
 		if nil != err {
