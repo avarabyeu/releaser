@@ -2,9 +2,9 @@ package cmd
 
 import (
 	b64 "encoding/base64"
+	"fmt"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"fmt"
 	"os"
 )
 

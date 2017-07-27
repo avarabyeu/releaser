@@ -1,9 +1,9 @@
 package cmd
 
 import (
+	"os"
 	"testing"
 	"text/template"
-	"os"
 )
 
 func TestUrlFormatter(t *testing.T) {

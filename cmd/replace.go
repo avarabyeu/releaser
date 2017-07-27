@@ -1,14 +1,14 @@
 package cmd
 
 import (
-	"github.com/spf13/cobra"
-	"os"
-	"log"
-	"path"
-	"io/ioutil"
-	"text/template"
 	"bytes"
 	"github.com/avarabyeu/releaser/util"
+	"github.com/spf13/cobra"
+	"io/ioutil"
+	"log"
+	"os"
+	"path"
+	"text/template"
 )
 
 var replaceCommand = &cobra.Command{

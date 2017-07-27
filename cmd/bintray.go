@@ -1,10 +1,14 @@
 package cmd
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"github.com/avarabyeu/releaser/util"
+	"github.com/juju/errgo/errors"
 	"github.com/spf13/cobra"
 	"gopkg.in/cheggaaa/pb.v1"
+	"html/template"
 	"io"
 	"io/ioutil"
 	"log"
@@ -14,10 +18,6 @@ import (
 	"path"
 	"sync"
 	"time"
-	"html/template"
-	"encoding/json"
-	"bytes"
-	"github.com/juju/errgo/errors"
 )
 
 const (
