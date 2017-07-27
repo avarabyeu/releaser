@@ -108,12 +108,12 @@ func createVersion(version string, bd *BintrayConf) error {
 	defer rs.Body.Close()
 
 	if rs.StatusCode/100 != 2 {
+		body, _ := ioutil.ReadAll(rs.Body)
+		fmt.Println("Error:", string(body))
 		if 409 == rs.StatusCode {
 			//already exists. That's OK
 			return nil
 		}
-		body, _ := ioutil.ReadAll(rs.Body)
-		fmt.Println("Error:", string(body))
 		return errors.Newf("Cannot create new version. Status code: %d", rs.StatusCode)
 	}
 
