@@ -20,13 +20,17 @@ var releaseCommand = &cobra.Command{
 		bump(cmd)
 
 		//replace if needed
-		replace(cmd, config.Replace)
+		err := replace(cmd, config.Replace)
+		if nil != err {
+			log.Fatal("Cannot make substitution")
+		}
+
 		toCommit := []string{}
 		_ = append(toCommit, util.MapValues(config.Replace)...)
 		_ = append(toCommit, verFile)
 
 		//commit changes
-		err := pushFiles("[Releaser] Update release version", toCommit...)
+		err = pushFiles("[Releaser] Update release version", toCommit...)
 		if nil != err {
 			log.Fatal("Cannot push new version")
 		}
