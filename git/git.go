@@ -11,6 +11,9 @@ func GetLocalTags() ([]string, error) {
 	if nil != err {
 		return nil, err
 	}
+	if "" == out {
+		return []string{}, nil
+	}
 	return strings.Split(out, "\n"), nil
 }
 
