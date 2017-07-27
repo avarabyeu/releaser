@@ -2,9 +2,9 @@ package git
 
 import (
 	"fmt"
+	"log"
 	"os/exec"
 	"strings"
-	"github.com/rkbalgi/go/paysim/log"
 )
 
 //ExecCmd executes command line command
