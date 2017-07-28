@@ -16,14 +16,15 @@ var releaseCommand = &cobra.Command{
 		log.Println("v1")
 		verFile := GetSemverFile(cmd)
 
+		repl := config.GetFilesToReplace()
 		//replace if needed
-		err := replace(cmd, config.Replace)
+		err := replace(cmd, repl)
 		if nil != err {
 			log.Fatal("Cannot make substitution")
 		}
 
 		toCommit := []string{}
-		_ = append(toCommit, util.MapValues(config.Replace)...)
+		_ = append(toCommit, util.MapValues(repl)...)
 		_ = append(toCommit, verFile)
 
 		//commit changes

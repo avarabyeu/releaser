@@ -6,6 +6,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"os"
+	"strings"
 )
 
 func init() {
@@ -67,8 +68,6 @@ func initConfig() {
 		os.Exit(1)
 	}
 
-	conf.SetDefault("Replace", map[string]string{})
-
 	if err := conf.Unmarshal(&config); err != nil {
 		fmt.Println("Can't unmarshall:", err)
 		os.Exit(1)
@@ -80,7 +79,18 @@ func initConfig() {
 type Config struct {
 	Bintray         *BintrayConf `mapstructure:"bintray"`
 	ArtifactsFolder string
-	Replace         map[string]string
+	Replace         string
+}
+
+//GetFilesToReplace get map of file names to replace placeholders
+func (c *Config) GetFilesToReplace() map[string]string {
+	files := strings.Split(c.Replace, ",")
+	toReplace := make(map[string]string, len(files))
+	for _,file := range files {
+		parts := strings.Split(file, "=")
+		toReplace[parts[0]] = parts[1]
+	}
+	return toReplace
 }
 
 //BintrayConf represents project config

@@ -16,7 +16,7 @@ var replaceCommand = &cobra.Command{
 	Short: "Replaces placeholders in files",
 	Long:  `Replaces placeholders in files`,
 	Run: func(cmd *cobra.Command, args []string) {
-		err := replace(cmd, config.Replace)
+		err := replace(cmd, config.GetFilesToReplace())
 		if nil != err {
 			log.Fatalf("Cannot execute replace command: %s", err)
 		}
