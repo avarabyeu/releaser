@@ -6,6 +6,7 @@ BUILD_DATE = `date +%FT%T%z`
 GO = go
 BINARY_DIR=bin
 GOFILES_NOVENDOR = $(shell find . -type f -name '*.go' -not -path "./vendor/*")
+GODIRS_NOVENDOR = $(shell go list ./... | grep -v /vendor/)
 
 BUILD_DEPS:= github.com/alecthomas/gometalinter
 
@@ -16,17 +17,13 @@ help:
 	@echo "test       - go test"
 	@echo "checkstyle - gofmt+golint+misspell"
 
-vendor: ## Install govendor and sync vendored dependencies
-	$(GO) get -v github.com/Masterminds/glide
-	cd $(GOPATH)/src/github.com/Masterminds/glide && git checkout tags/v0.12.3 && go install && cd -
-	glide install
 
 get-build-deps: vendor
 	$(GO) get $(BUILD_DEPS)
 	gometalinter --install
 
-test: vendor
-	$(GO) test $(glide novendor)
+test:
+	$(GO) test $(GODIRS_NOVENDOR)
 
 checkstyle: get-build-deps
 	gometalinter --vendor ./... --fast --disable=gas --disable=errcheck --disable=gotype --deadline 10m
